@@ -16,10 +16,6 @@ const CATEGORY_COVERS = {
   rings: "https://images.unsplash.com/photo-1713950920412-97799efdf870?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHw0fHxnb2xkJTIwcmluZ3MlMjBsdXh1cnl8ZW58MHx8fHwxNzg0Nzk1NDU4fDA&ixlib=rb-4.1.0&q=85",
   bridal: "https://images.pexels.com/photos/12708653/pexels-photo-12708653.jpeg",
   "gold-bars": "https://images.pexels.com/photos/321452/pexels-photo-321452.jpeg",
-  bangles: "PASTE_BANGLE_IMAGE_URL_HERE",
-  earrings: "PASTE_EARRING_IMAGE_URL_HERE",
-  chains: "PASTE_CHAIN_IMAGE_URL_HERE",
-  pendants: "PASTE_PENDANT_IMAGE_URL_HERE",
 };
 
 export default function HomePage() {
