@@ -119,11 +119,15 @@ export default function HomePage() {
               data-testid={`home-cat-${cat.slug}`}
               className={`relative rounded-xl overflow-hidden aspect-[4/3] group ${i === 0 ? "col-span-2 aspect-[16/9]" : ""}`}
             >
-              <img
-                src={CATEGORY_COVERS[cat.slug] || CATEGORY_COVERS.necklaces}
-                alt={cat.name_en}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              {CATEGORY_COVERS[cat.slug] ? (
+                <img
+                  src={CATEGORY_COVERS[cat.slug]}
+                  alt={cat.name_en}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div className="w-full h-full bg-[#080706]" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/40 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-3">
                 <div className="text-[10px] uppercase tracking-widest text-[#F3E5AB]/85">Category</div>
