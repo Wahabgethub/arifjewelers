@@ -1,0 +1,10 @@
+{
+  "short_name": "Arif Jewellers",
+  "name": "Arif Jewellers · 19+ Years of Trust",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080706",
+  "theme_color": "#080706",
+  "orientation": "portrait",
+  "icons": []
+}

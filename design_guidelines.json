@@ -1,0 +1,160 @@
+{
+  "theme": {
+    "mode": "dark",
+    "archetype": "LUXURY",
+    "description": "Premium, exclusive, and trust-driven digital showroom. Black and Gold dominance, avoiding gaudy excess by utilizing generous negative space and stark contrasts."
+  },
+  "typography": {
+    "strategy": "The 'Old Money Tech' variant for English, paired with traditional Nasta'liq for Urdu.",
+    "english": {
+      "headings": "Playfair Display, serif (Weights: 400, 600, 700) - for elegance and heritage.",
+      "body": "Outfit or Manrope, sans-serif (Weights: 300, 400, 500) - for high legibility in dense UI.",
+      "rates_numbers": "Outfit or JetBrains Mono - tabular numbers for live rates."
+    },
+    "urdu_sindhi": {
+      "headings": "Noto Nastaliq Urdu (for authentic, classic feel).",
+      "body": "Noto Sans Arabic (clean and readable at small sizes)."
+    },
+    "rules": [
+      "CRITICAL: Do not use Inter or generic sans for headings.",
+      "Implement dynamic dir='rtl' for Urdu/Sindhi language selections.",
+      "Headlines > 32px must use tracking-tight."
+    ]
+  },
+  "colors": {
+    "background": {
+      "main": "#080706",
+      "surface": "#12100E",
+      "surface_elevated": "#1A1714"
+    },
+    "primary": {
+      "gold_base": "#D4AF37",
+      "gold_light": "#F3E5AB",
+      "gold_dark": "#997A00"
+    },
+    "text": {
+      "primary": "#FDFBF7",
+      "secondary": "#A19D98",
+      "muted": "#6B6661"
+    },
+    "accents": {
+      "rate_up": "#4ADE80",
+      "rate_down": "#F87171",
+      "whatsapp": "#25D366"
+    },
+    "rules": [
+      "Tinted Grey Rule: All greys and blacks must have a warm/brown undertone (e.g., #12100E) to complement the gold.",
+      "Never use pure black (#000000) or pure white (#FFFFFF)."
+    ]
+  },
+  "visual_enhancers": {
+    "shimmer_sweep": "Use Framer Motion to create a passing light reflection effect (linear-gradient) over the Live Rates card and Splash Screen logo.",
+    "glassmorphism": "For Sticky Header and Bottom Nav: backdrop-blur-xl bg-[#080706]/70 with a delicate 1px top/bottom border of border-white/10.",
+    "surfaces": "Cards should use the 'Tactile' Neumorphism variant tailored for dark mode: flat surface (#12100E), 1px solid border-white/5, and subtle inner glow on hover."
+  },
+  "components_needed": [
+    {
+      "name": "Cinematic Splash Screen",
+      "description": "Full screen overlay. Fades in Roman Urdu dialogue ('Khaliq-e-Haqiqi ke fazl se...', '19+ Years of Trust'), followed by Arif Jewellers Logo reveal. A gold shimmer sweeps across the logo before routing to Home."
+    },
+    {
+      "name": "Live Gold/Silver Rates Card",
+      "description": "Hero card on Home. Displays 24K, 22K, 21K, and Silver rates per city. Includes 'Last Updated' timestamp. Triggers a soft gold shimmer animation upon data fetch/update."
+    },
+    {
+      "name": "Bottom Navigation",
+      "description": "Fixed at bottom. 5 items: Home, Collections, Live Rates, Wishlist, Profile. Must look native (app-like) with safe-area padding."
+    },
+    {
+      "name": "Floating Action Buttons",
+      "description": "Always visible bottom-right (above bottom nav). WhatsApp and Call icons, styled luxuriously (gold or green subtle glow)."
+    },
+    {
+      "name": "Product Detail Layout",
+      "description": "Large edge-to-edge product image carousel. Title, weight, purity, making charges info. Massive 'Ask Price via WhatsApp' primary button."
+    },
+    {
+      "name": "Hidden Admin Panel",
+      "description": "Accessible via a discreet Gear icon in Profile. Requires basic auth. Allows CRUD for Live Rates, Products, and Reviews."
+    }
+  ],
+  "grids_and_layouts": {
+    "strategy": "Mobile-First App (PWA style)",
+    "container": "w-full max-w-md mx-auto min-h-screen bg-background relative shadow-2xl overflow-x-hidden (creates a mobile-app frame on desktop, full screen on mobile).",
+    "home_layout": "Bento Grid (High Density) for Categories: mix of col-span-1 and col-span-2 tiles to create visual tension.",
+    "spacing": "Generous Spacing (p-6, p-8) to exude luxury. Cramped text feels cheap.",
+    "rules": [
+      "Hide standard scrollbars (use CSS to hide webkit-scrollbar) to enhance the native app feel."
+    ]
+  },
+  "motion": {
+    "library": "framer-motion",
+    "patterns": [
+      "Page Transitions: Slight scale up (0.98 to 1) and fade in on route change.",
+      "List Staggering: New arrivals and Categories fade in sequentially.",
+      "3D Touch: Active state on cards and buttons scales down slightly (scale: 0.97) to simulate physical touch."
+    ]
+  },
+  "accessibility": {
+    "contrast": "Ensure text over gold buttons is dark (#12100E) for WCAG/APCA compliance.",
+    "rtl_support": "Implement dynamic flex directions and text alignments for Urdu/Sindhi.",
+    "testing": "All interactive elements MUST include data-testid attribute (e.g., data-testid='whatsapp-fab-button')."
+  },
+  "media": {
+    "images_to_use": [
+      {
+        "url": "https://images.pexels.com/photos/24815712/pexels-photo-24815712.jpeg",
+        "category": "Hero / Necklace Collection",
+        "description": "Luxury gold necklace with diamonds on elegant black background"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1713950920412-97799efdf870?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2OTV8MHwxfHNlYXJjaHw0fHxnb2xkJTIwcmluZ3MlMjBsdXh1cnl8ZW58MHx8fHwxNzg0Nzk1NDU4fDA&ixlib=rb-4.1.0&q=85",
+        "category": "Rings Collection",
+        "description": "Close up of a ring on a black surface"
+      },
+      {
+        "url": "https://images.pexels.com/photos/12708653/pexels-photo-12708653.jpeg",
+        "category": "Bridal Collection",
+        "description": "South Asian woman in traditional bridal attire and gold jewelry"
+      },
+      {
+        "url": "https://images.pexels.com/photos/321452/pexels-photo-321452.jpeg",
+        "category": "24K Gold Bars / Investments",
+        "description": "Gold bars on dark background"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1782834294716-8e28c18bdba6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwyfHxqZXdlbHJ5JTIwc2hvd3Jvb20lMjBsdXh1cnklMjBpbnRlcmlvcnxlbnwwfHx8fDE3ODQ3OTU0Njh8MA&ixlib=rb-4.1.0&q=85",
+        "category": "About Us / Showroom",
+        "description": "Luxury jewelry showroom interior"
+      }
+    ]
+  },
+  "3d_libraries": {
+    "recommendation": "Use Framer Motion for the UI transitions and Shimmer effects. 3D WebGL is overkill for an app optimizing for quick loading in Sindh on mobile networks. Rely on high-res HD images and fluid 2D motion (CSS/Framer) for luxury feel."
+  },
+  "instructions_to_main_agent": [
+    "CRITICAL: The codebase uses .js files, NOT .tsx files. Write React components using standard .js / .jsx syntax.",
+    "Implement the 'Cinematic Splash' as a one-time overlay using framer-motion when the app loads.",
+    "Do NOT use complete transparent backgrounds for the Bottom Nav or Headers. Use `backdrop-blur-xl bg-[#080706]/80`.",
+    "Ensure standard HTML input/select are NOT used; rely on Shadcn/custom UI components styled heavily in black/gold.",
+    "Always apply data-testid to buttons, inputs, links.",
+    "Since it's a mobile PWA experience, wrap the main router content in a div with max-w-md mx-auto to look like an app on desktop, and ensure pb-24 padding at the bottom so the Bottom Nav doesn't obscure content."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use sonner for toasts, located in /app/src/components/ui/sonner.tsx"
+  ]
+}
