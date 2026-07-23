@@ -15,7 +15,7 @@ import jwt
 import requests
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Response, UploadFile, File, Query, Header
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import Response as StarletteResponse
+from starlette.responses import Response as StarletteResponse, RedirectResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr
 
@@ -32,7 +32,6 @@ ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY", "")
 APP_NAME = os.environ.get("APP_NAME", "arif-jewellers")
 WHATSAPP_NUMBER = os.environ.get("WHATSAPP_NUMBER", "03092276875")
-STORAGE_URL = "https://integrations.emergentagent.com/objstore/api/v1/storage"
 
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
@@ -40,38 +39,33 @@ db = client[DB_NAME]
 app = FastAPI(title="Arif Jewellers API")
 api = APIRouter(prefix="/api")
 
-# ---------- Object Storage ----------
-_storage_key = None
+# ---------- Object Storage (Cloudinary) ----------
+import cloudinary
+import cloudinary.uploader
+
+CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME", "")
+CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY", "")
+CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET", "")
+
+cloudinary.config(
+    cloud_name=CLOUDINARY_CLOUD_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET,
+    secure=True,
+)
 
 def init_storage():
-    global _storage_key
-    if _storage_key:
-        return _storage_key
-    try:
-        r = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
-        r.raise_for_status()
-        _storage_key = r.json()["storage_key"]
-        return _storage_key
-    except Exception as e:
-        logger.error(f"Storage init failed: {e}")
-        raise
+    if not (CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET):
+        raise RuntimeError("Cloudinary credentials are not set")
+    return True
 
 def put_object(path: str, data: bytes, content_type: str):
-    key = init_storage()
-    r = requests.put(
-        f"{STORAGE_URL}/objects/{path}",
-        headers={"X-Storage-Key": key, "Content-Type": content_type},
-        data=data,
-        timeout=120,
+    result = cloudinary.uploader.upload(
+        data,
+        public_id=path,
+        resource_type="image",
     )
-    r.raise_for_status()
-    return r.json()
-
-def get_object(path: str):
-    key = init_storage()
-    r = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
-    r.raise_for_status()
-    return r.content, r.headers.get("Content-Type", "application/octet-stream")
+    return {"path": result["public_id"], "url": result["secure_url"], "size": result.get("bytes", len(data))}
 
 
 # ---------- Auth Helpers ----------
@@ -462,12 +456,13 @@ async def upload_file(file: UploadFile = File(...), user=Depends(get_current_adm
     ext = (file.filename or "bin").rsplit(".", 1)[-1].lower()
     content_type = MIME.get(ext, file.content_type or "application/octet-stream")
     file_id = str(uuid.uuid4())
-    path = f"{APP_NAME}/uploads/{file_id}.{ext}"
+    path = f"{APP_NAME}/uploads/{file_id}"
     data = await file.read()
     result = put_object(path, data, content_type)
     doc = {
         "id": file_id,
         "storage_path": result["path"],
+        "cloud_url": result["url"],
         "content_type": content_type,
         "size": result.get("size", len(data)),
         "original_filename": file.filename,
@@ -482,11 +477,9 @@ async def download_file(file_id: str):
     rec = await db.files.find_one({"id": file_id, "is_deleted": False})
     if not rec:
         raise HTTPException(status_code=404, detail="File not found")
-    try:
-        data, ct = get_object(rec["storage_path"])
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Storage read error: {e}")
-    return StarletteResponse(content=data, media_type=rec.get("content_type", ct))
+    if rec.get("cloud_url"):
+        return RedirectResponse(rec["cloud_url"])
+    raise HTTPException(status_code=500, detail="Storage read error")
 
 
 # ---------- Health ----------
