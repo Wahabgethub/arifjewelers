@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import AppHeader from "@/components/AppHeader";
 import ProductCard from "@/components/ProductCard";
-import { api } from "@/lib/api";
+import { api, fileUrl } from "@/lib/api";
 import { useLang } from "@/contexts/LanguageContext";
 
 const CAT_COVERS = {
@@ -57,11 +57,15 @@ export default function CollectionsPage() {
                   data-testid={`cat-${cat.slug}`}
                   className={`block relative rounded-xl overflow-hidden aspect-[4/3] group surface border-gold-hair`}
                 >
-                  <img
-                    src={CAT_COVERS[cat.slug] || CAT_COVERS.necklaces}
-                    alt={cat.name_en}
-                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
-                  />
+                  {(cat.cover_image ? fileUrl(cat.cover_image) : CAT_COVERS[cat.slug]) ? (
+                    <img
+                      src={cat.cover_image ? fileUrl(cat.cover_image) : CAT_COVERS[cat.slug]}
+                      alt={cat.name_en}
+                      className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-[#080706]" />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <div className="font-serif-lux text-[15px] text-[#FDFBF7] leading-tight">{cat.name_en}</div>

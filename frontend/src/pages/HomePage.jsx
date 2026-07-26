@@ -119,9 +119,9 @@ export default function HomePage() {
               data-testid={`home-cat-${cat.slug}`}
               className={`relative rounded-xl overflow-hidden aspect-[4/3] group ${i === 0 ? "col-span-2 aspect-[16/9]" : ""}`}
             >
-              {CATEGORY_COVERS[cat.slug] ? (
+              {(cat.cover_image ? fileUrl(cat.cover_image) : CATEGORY_COVERS[cat.slug]) ? (
                 <img
-                  src={CATEGORY_COVERS[cat.slug]}
+                  src={cat.cover_image ? fileUrl(cat.cover_image) : CATEGORY_COVERS[cat.slug]}
                   alt={cat.name_en}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />

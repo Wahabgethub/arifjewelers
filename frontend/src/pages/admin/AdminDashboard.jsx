@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, Diamond, TrendingUp, Star, Inbox, ChevronLeft } from "lucide-react";
+import { LogOut, Diamond, TrendingUp, Star, Inbox, ChevronLeft, LayoutGrid } from "lucide-react";
 import AdminProducts from "./sections/AdminProducts";
 import AdminRates from "./sections/AdminRates";
 import AdminReviews from "./sections/AdminReviews";
 import AdminInquiries from "./sections/AdminInquiries";
+import AdminCategories from "./sections/AdminCategories";
 
 const TABS = [
   { key: "products", label: "Products", Icon: Diamond },
+  { key: "categories", label: "Collections", Icon: LayoutGrid },
   { key: "rates", label: "Live Rates", Icon: TrendingUp },
   { key: "reviews", label: "Reviews", Icon: Star },
   { key: "inquiries", label: "Inquiries", Icon: Inbox },
@@ -38,7 +40,7 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      <div className="px-3 mt-3 grid grid-cols-4 gap-1.5">
+      <div className="px-3 mt-3 grid grid-cols-5 gap-1.5">
         {TABS.map(({ key, label, Icon }) => (
           <button
             key={key}
@@ -58,6 +60,7 @@ export default function AdminDashboard() {
 
       <div className="mt-4 mx-4">
         {tab === "products" && <AdminProducts />}
+        {tab === "categories" && <AdminCategories />}
         {tab === "rates" && <AdminRates />}
         {tab === "reviews" && <AdminReviews />}
         {tab === "inquiries" && <AdminInquiries />}
