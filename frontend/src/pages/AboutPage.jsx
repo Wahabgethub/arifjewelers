@@ -49,7 +49,7 @@ export default function AboutPage() {
         <div className="mt-3 rounded-xl overflow-hidden border border-white/10">
           <iframe
             title="Arif Jewellers Location"
-            src={`https://www.google.com/maps?q=${encodeURIComponent("Shahi Bazar, Shahdadpur, Sindh, Pakistan")}&output=embed`}
+            src={`https://www.google.com/maps?q=25.924056,68.620833&output=embed`}
             className="w-full h-56 border-0"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
