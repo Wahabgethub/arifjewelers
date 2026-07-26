@@ -55,8 +55,7 @@ export default function AboutPage() {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-
-        
+        <a
           href="https://www.google.com/maps/dir/?api=1&destination=25.924056,68.620833"
           target="_blank"
           rel="noreferrer"
