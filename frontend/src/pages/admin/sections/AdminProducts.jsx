@@ -191,7 +191,7 @@ export default function AdminProducts() {
                 <label className="btn-press surface border border-dashed border-white/15 p-4 flex items-center justify-center gap-2 text-[13px] text-[#A19D98] rounded-lg cursor-pointer">
                   {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
                   <span>{uploading ? "Uploading…" : "Upload from gallery / camera"}</span>
-                  <input data-testid="pf-images" type="file" multiple accept="image/*" capture="environment" className="hidden" onChange={handleUpload} />
+                  <input data-testid="pf-images" type="file" multiple accept="image/*" className="hidden" onChange={handleUpload} />
                 </label>
                 {form.images.length > 0 && (
                   <div className="mt-2 grid grid-cols-4 gap-2">
@@ -212,7 +212,7 @@ export default function AdminProducts() {
                 <label className="btn-press surface border border-dashed border-white/15 p-4 flex items-center justify-center gap-2 text-[13px] text-[#A19D98] rounded-lg cursor-pointer">
                   {uploadingVideo ? <Loader2 size={16} className="animate-spin" /> : <VideoIcon size={16} />}
                   <span>{uploadingVideo ? "Uploading…" : "Upload video from gallery / camera"}</span>
-                  <input data-testid="pf-videos" type="file" multiple accept="video/*" capture="environment" className="hidden" onChange={handleVideoUpload} />
+                  <input data-testid="pf-videos" type="file" multiple accept="video/*" className="hidden" onChange={handleVideoUpload} />
                 </label>
                 {form.videos.length > 0 && (
                   <div className="mt-2 grid grid-cols-2 gap-2">

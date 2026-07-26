@@ -150,7 +150,7 @@ export default function AdminCategories() {
                   <label className="btn-press cursor-pointer inline-flex items-center gap-1.5 rounded-lg surface border border-white/10 text-[12px] px-3 py-2 text-[#A19D98]">
                     {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
                     {uploading ? "Uploading..." : "Choose Photo"}
-                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleUpload} />
+                    <input type="file" accept="image/*" className="hidden" onChange={handleUpload} />
                   </label>
                 </div>
               </div>
