@@ -88,6 +88,23 @@ export default function ProductPage() {
         </div>
       )}
 
+      {product.videos?.length > 0 && (
+        <div className="px-4 mt-4">
+          <div className="text-[10px] uppercase tracking-widest text-[#A19D98] mb-2">Video</div>
+          <div className="flex flex-col gap-3">
+            {product.videos.map((vid, i) => (
+              <video
+                key={i}
+                src={fileUrl(vid)}
+                controls
+                playsInline
+                className="w-full rounded-xl border border-white/10 bg-black"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="mx-4 mt-4">
         <h1 data-testid="product-name" className="font-serif-lux text-2xl text-[#FDFBF7] leading-tight">{product.name}</h1>
         <div className="mt-1 text-[10px] uppercase tracking-widest text-[#F3E5AB]">{product.category}</div>

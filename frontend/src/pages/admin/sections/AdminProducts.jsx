@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api, fileUrl, formatApiError } from "@/lib/api";
 import { toast } from "sonner";
-import { Plus, Loader2, X, Upload, Trash2, Edit3 } from "lucide-react";
+import { Plus, Loader2, X, Upload, Trash2, Edit3, Video as VideoIcon } from "lucide-react";
 
 const EMPTY = {
   name: "",
@@ -12,6 +12,7 @@ const EMPTY = {
   availability: "In Stock",
   description: "",
   images: [],
+  videos: [],
   featured: false,
   new_arrival: true,
 };
@@ -60,7 +61,31 @@ export default function AdminProducts() {
     }
   };
 
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const handleVideoUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploadingVideo(true);
+    try {
+      const uploaded = [];
+      for (const f of files) {
+        const fd = new FormData();
+        fd.append("file", f);
+        const { data } = await api.post("/files/upload", fd, { headers: { "Content-Type": "multipart/form-data" } });
+        uploaded.push(data.id);
+      }
+      setForm((prev) => ({ ...prev, videos: [...prev.videos, ...uploaded] }));
+      toast.success(`Uploaded ${uploaded.length} video(s)`);
+    } catch (err) {
+      toast.error(formatApiError(err.response?.data?.detail));
+    } finally {
+      setUploadingVideo(false);
+      e.target.value = "";
+    }
+  };
+
   const removeImage = (id) => setForm((prev) => ({ ...prev, images: prev.images.filter((x) => x !== id) }));
+  const removeVideo = (id) => setForm((prev) => ({ ...prev, videos: prev.videos.filter((x) => x !== id) }));
 
   const save = async () => {
     if (!form.name.trim()) { toast.error("Product name required"); return; }
@@ -165,7 +190,7 @@ export default function AdminProducts() {
                 <div className="text-[10px] uppercase tracking-widest text-[#A19D98] mb-1">Images</div>
                 <label className="btn-press surface border border-dashed border-white/15 p-4 flex items-center justify-center gap-2 text-[13px] text-[#A19D98] rounded-lg cursor-pointer">
                   {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-                  <span>{uploading ? "Uploading…" : "Upload from device / camera"}</span>
+                  <span>{uploading ? "Uploading…" : "Upload from gallery / camera"}</span>
                   <input data-testid="pf-images" type="file" multiple accept="image/*" capture="environment" className="hidden" onChange={handleUpload} />
                 </label>
                 {form.images.length > 0 && (
@@ -174,6 +199,27 @@ export default function AdminProducts() {
                       <div key={id} className="relative aspect-square rounded-md overflow-hidden border border-white/10">
                         <img src={fileUrl(id)} alt="" className="w-full h-full object-cover" />
                         <button onClick={() => removeImage(id)} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center text-[#F87171]">
+                          <X size={11} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-[#A19D98] mb-1">Videos</div>
+                <label className="btn-press surface border border-dashed border-white/15 p-4 flex items-center justify-center gap-2 text-[13px] text-[#A19D98] rounded-lg cursor-pointer">
+                  {uploadingVideo ? <Loader2 size={16} className="animate-spin" /> : <VideoIcon size={16} />}
+                  <span>{uploadingVideo ? "Uploading…" : "Upload video from gallery / camera"}</span>
+                  <input data-testid="pf-videos" type="file" multiple accept="video/*" capture="environment" className="hidden" onChange={handleVideoUpload} />
+                </label>
+                {form.videos.length > 0 && (
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    {form.videos.map((id) => (
+                      <div key={id} className="relative aspect-video rounded-md overflow-hidden border border-white/10 bg-black">
+                        <video src={fileUrl(id)} className="w-full h-full object-cover" muted />
+                        <button onClick={() => removeVideo(id)} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/70 flex items-center justify-center text-[#F87171]">
                           <X size={11} />
                         </button>
                       </div>

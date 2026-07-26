@@ -59,11 +59,11 @@ def init_storage():
         raise RuntimeError("Cloudinary credentials are not set")
     return True
 
-def put_object(path: str, data: bytes, content_type: str):
+def put_object(path: str, data: bytes, content_type: str, resource_type: str = "image"):
     result = cloudinary.uploader.upload(
         data,
         public_id=path,
-        resource_type="image",
+        resource_type=resource_type,
     )
     return {"path": result["public_id"], "url": result["secure_url"], "size": result.get("bytes", len(data))}
 
@@ -123,6 +123,7 @@ class ProductIn(BaseModel):
     availability: Optional[str] = "In Stock"
     description: Optional[str] = None
     images: List[str] = []  # file ids
+    videos: List[str] = []  # file ids
     featured: bool = False
     new_arrival: bool = False
 
@@ -450,27 +451,31 @@ async def delete_inquiry(iid: str, user=Depends(get_current_admin)):
 
 # ---------- File Upload / Download ----------
 MIME = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "webp": "image/webp", "gif": "image/gif"}
+VIDEO_EXTS = {"mp4", "mov", "webm", "m4v", "avi"}
 
 @api.post("/files/upload")
 async def upload_file(file: UploadFile = File(...), user=Depends(get_current_admin)):
     ext = (file.filename or "bin").rsplit(".", 1)[-1].lower()
-    content_type = MIME.get(ext, file.content_type or "application/octet-stream")
+    is_video = ext in VIDEO_EXTS or (file.content_type or "").startswith("video/")
+    resource_type = "video" if is_video else "image"
+    content_type = file.content_type or (MIME.get(ext) if not is_video else f"video/{ext}") or "application/octet-stream"
     file_id = str(uuid.uuid4())
     path = f"{APP_NAME}/uploads/{file_id}"
     data = await file.read()
-    result = put_object(path, data, content_type)
+    result = put_object(path, data, content_type, resource_type=resource_type)
     doc = {
         "id": file_id,
         "storage_path": result["path"],
         "cloud_url": result["url"],
         "content_type": content_type,
+        "media_type": resource_type,
         "size": result.get("size", len(data)),
         "original_filename": file.filename,
         "is_deleted": False,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     await db.files.insert_one(doc)
-    return {"id": file_id, "url": f"/api/files/{file_id}"}
+    return {"id": file_id, "url": f"/api/files/{file_id}", "media_type": resource_type}
 
 @api.get("/files/{file_id}")
 async def download_file(file_id: str):
