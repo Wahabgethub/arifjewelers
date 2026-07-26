@@ -12,10 +12,10 @@ export default function CinematicSplash({ onDone }) {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setStep(1), 1200);
-    const t2 = setTimeout(() => setStep(2), 2600);
-    const t3 = setTimeout(() => setDone(true), 4400);
-    const t4 = setTimeout(() => onDone && onDone(), 5000);
+    const t1 = setTimeout(() => setStep(1), 2000);
+    const t2 = setTimeout(() => setStep(2), 4300);
+    const t3 = setTimeout(() => setDone(true), 7200);
+    const t4 = setTimeout(() => onDone && onDone(), 8000);
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, [onDone]);
 

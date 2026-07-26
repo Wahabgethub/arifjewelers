@@ -76,9 +76,15 @@ function AppShell() {
     const t = setTimeout(() => {
       sessionStorage.setItem("arif_splash_seen", "1");
       setShowSplash(false);
-    }, 5200);
+    }, 8300);
     return () => clearTimeout(t);
   }, [showSplash]);
+
+  useEffect(() => {
+    const handler = () => setShowSplash(true);
+    window.addEventListener("arif-replay-splash", handler);
+    return () => window.removeEventListener("arif-replay-splash", handler);
+  }, []);
 
   return (
     <div className="App">
