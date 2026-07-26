@@ -56,6 +56,16 @@ export default function AboutPage() {
           />
         </div>
 
+        
+          href="https://www.google.com/maps/dir/?api=1&destination=25.924056,68.620833"
+          target="_blank"
+          rel="noreferrer"
+          data-testid="about-directions"
+          className="btn-press mt-2 w-full h-11 rounded-full flex items-center justify-center gap-2 text-[13px] text-[#080706] bg-[#D4AF37] font-medium"
+        >
+          Get Directions
+        </a>
+
         <div className="mt-4 grid grid-cols-2 gap-2">
           <a
             href={whatsappLink("Assalam-o-Alaikum, Arif Jewellers ke baare mein aur maloomat chahiye.")}
