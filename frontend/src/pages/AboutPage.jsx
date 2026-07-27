@@ -84,7 +84,7 @@ export default function AboutPage() {
           </a>
         </div>
         <div className="mt-2 grid grid-cols-2 gap-2">
-          
+          <a
             href="https://instagram.com/arifjewellerofficial"
             target="_blank"
             rel="noreferrer"
@@ -93,7 +93,7 @@ export default function AboutPage() {
           >
             <Instagram size={15} /> Instagram
           </a>
-          
+          <a
             href="https://www.tiktok.com/@arif.jewelers.offi"
             target="_blank"
             rel="noreferrer"
