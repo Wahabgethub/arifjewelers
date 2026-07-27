@@ -1,5 +1,5 @@
 import React from "react";
-import { Phone } from "lucide-react";
+import { Phone, Instagram } from "lucide-react";
 import { whatsappLink, callLink } from "@/lib/whatsapp";
 
 export default function FloatingActions() {
@@ -8,7 +8,27 @@ export default function FloatingActions() {
       data-testid="floating-actions"
       className="fixed z-40 bottom-24 left-1/2 -translate-x-1/2 w-full max-w-md pointer-events-none"
     >
-      <div className="flex justify-end pr-4 gap-3 pointer-events-auto">
+      <div className="flex justify-end pr-4 gap-2.5 pointer-events-auto">
+        <a
+          href="https://www.tiktok.com/@arif.jewelers.offi"
+          target="_blank"
+          rel="noreferrer"
+          data-testid="fab-tiktok"
+          className="btn-press w-11 h-11 rounded-full flex items-center justify-center surface border-gold-hair"
+          aria-label="TikTok"
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" className="text-[#F3E5AB]"><path d="M16.6 5.82c-.7-.77-1.1-1.76-1.1-2.82h-3.2v13.9c0 1.6-1.3 2.9-2.9 2.9s-2.9-1.3-2.9-2.9 1.3-2.9 2.9-2.9c.3 0 .58.05.85.13v-3.25a6.1 6.1 0 0 0-.85-.06 6.1 6.1 0 0 0 0 12.2c3.37 0 6.1-2.73 6.1-6.1V9.4a7.9 7.9 0 0 0 4.6 1.48V7.68c-1.24 0-2.38-.44-3.5-1.86Z"/></svg>
+        </a>
+        <a
+          href="https://instagram.com/arifjewellerofficial"
+          target="_blank"
+          rel="noreferrer"
+          data-testid="fab-instagram"
+          className="btn-press w-11 h-11 rounded-full flex items-center justify-center surface border-gold-hair"
+          aria-label="Instagram"
+        >
+          <Instagram size={17} className="text-[#F3E5AB]" />
+        </a>
         <a
           href={callLink()}
           data-testid="fab-call"
