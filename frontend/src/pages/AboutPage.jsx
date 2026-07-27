@@ -2,7 +2,7 @@ import React from "react";
 import AppHeader from "@/components/AppHeader";
 import { useLang } from "@/contexts/LanguageContext";
 import { whatsappLink, callLink, WA_DISPLAY } from "@/lib/whatsapp";
-import { MapPin, Phone, MessageCircle, Clock } from "lucide-react";
+import { MapPin, Phone, MessageCircle, Clock, Instagram} from "lucide-react";
 
 const SHOP_IMG = "https://images.unsplash.com/photo-1782834294716-8e28c18bdba6?crop=entropy&cs=srgb&fm=jpg&q=85";
 
@@ -81,6 +81,27 @@ export default function AboutPage() {
             className="btn-press btn-gold h-12 rounded-full flex items-center justify-center gap-2 font-medium"
           >
             <Phone size={15} /> {WA_DISPLAY}
+          </a>
+        </div>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          
+            href="https://instagram.com/arifjewellerofficial"
+            target="_blank"
+            rel="noreferrer"
+            data-testid="about-instagram"
+            className="btn-press surface h-12 rounded-full flex items-center justify-center gap-2 text-[13px] text-[#F3E5AB] border-gold-hair"
+          >
+            <Instagram size={15} /> Instagram
+          </a>
+          
+            href="https://www.tiktok.com/@arif.jewelers.offi"
+            target="_blank"
+            rel="noreferrer"
+            data-testid="about-tiktok"
+            className="btn-press surface h-12 rounded-full flex items-center justify-center gap-2 text-[13px] text-[#F3E5AB] border-gold-hair"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.7-.77-1.1-1.76-1.1-2.82h-3.2v13.9c0 1.6-1.3 2.9-2.9 2.9s-2.9-1.3-2.9-2.9 1.3-2.9 2.9-2.9c.3 0 .58.05.85.13v-3.25a6.1 6.1 0 0 0-.85-.06 6.1 6.1 0 0 0 0 12.2c3.37 0 6.1-2.73 6.1-6.1V9.4a7.9 7.9 0 0 0 4.6 1.48V7.68c-1.24 0-2.38-.44-3.5-1.86Z"/></svg>
+            TikTok
           </a>
         </div>
       </div>
