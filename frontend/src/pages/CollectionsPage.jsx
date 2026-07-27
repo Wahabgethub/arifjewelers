@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Loader2 } from "lucide-react";
 import AppHeader from "@/components/AppHeader";
 import ProductCard from "@/components/ProductCard";
 import { api, fileUrl } from "@/lib/api";
@@ -19,6 +19,7 @@ export default function CollectionsPage() {
   const { t } = useLang();
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -29,9 +30,11 @@ export default function CollectionsPage() {
 
   useEffect(() => {
     if (!slug) { setProducts([]); return; }
+    setLoadingProducts(true);
     (async () => {
       const p = await api.get("/products", { params: { category: slug } }).then((r) => r.data).catch(() => []);
       setProducts(p);
+      setLoadingProducts(false);
     })();
   }, [slug]);
 
@@ -83,7 +86,19 @@ export default function CollectionsPage() {
             <ChevronLeft size={14} /> Categories
           </Link>
           <h2 className="font-serif-lux text-2xl mb-3 text-gold-gradient">{activeCat?.name_en || slug}</h2>
-          {products.length === 0 ? (
+          {loadingProducts ? (
+            <div className="grid grid-cols-2 gap-2">
+              {[0, 1, 2, 3].map((i) => (
+                <div key={i} className="surface rounded-xl overflow-hidden animate-pulse">
+                  <div className="aspect-[4/5] bg-white/5" />
+                  <div className="p-3 space-y-2">
+                    <div className="h-3 w-3/4 bg-white/5 rounded" />
+                    <div className="h-2.5 w-1/2 bg-white/5 rounded" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : products.length === 0 ? (
             <div className="surface p-6 text-center text-[#A19D98] text-sm">
               No items in this category yet. Please check back soon or ask on WhatsApp.
             </div>
