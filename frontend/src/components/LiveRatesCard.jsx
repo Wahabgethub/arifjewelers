@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { api } from "@/lib/api";
+import { getWithRetry } from "@/lib/api";
 import { useLang } from "@/contexts/LanguageContext";
 import dayjs from "dayjs";
 import { TrendingUp } from "lucide-react";
@@ -18,13 +18,10 @@ export default function LiveRatesCard({ compact = false }) {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { data } = await api.get("/rates");
-        setCities(data || []);
-        if (data && data.length) setActiveCity(data[0].city);
-      } finally {
-        setLoading(false);
-      }
+      const data = await getWithRetry("/rates");
+      setCities(data || []);
+      if (data && data.length) setActiveCity(data[0].city);
+      setLoading(false);
     })();
   }, []);
 

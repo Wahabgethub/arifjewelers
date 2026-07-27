@@ -6,7 +6,21 @@ export const API = `${BACKEND_URL}/api`;
 export const api = axios.create({
   baseURL: API,
   withCredentials: true,
+  timeout: 20000,
 });
+
+export async function getWithRetry(path, config, retries = 3, delayMs = 1800) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await api.get(path, config);
+      return res.data;
+    } catch (err) {
+      if (attempt === retries) return null;
+      await new Promise((r) => setTimeout(r, delayMs));
+    }
+  }
+  return null;
+}
 
 // Attach token from localStorage as Bearer as well (in addition to cookies)
 api.interceptors.request.use((config) => {

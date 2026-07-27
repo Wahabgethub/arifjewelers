@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MapPin, Phone, MessageCircle } from "lucide-react";
-import { api, fileUrl } from "@/lib/api";
+import { api, fileUrl, getWithRetry } from "@/lib/api";
 import { useLang } from "@/contexts/LanguageContext";
 import AppHeader from "@/components/AppHeader";
 import LiveRatesCard from "@/components/LiveRatesCard";
@@ -27,13 +27,13 @@ export default function HomePage() {
   useEffect(() => {
     (async () => {
       const [f, n, c] = await Promise.all([
-        api.get("/products", { params: { featured: true } }).then((r) => r.data).catch(() => []),
-        api.get("/products", { params: { new_arrival: true } }).then((r) => r.data).catch(() => []),
-        api.get("/categories").then((r) => r.data).catch(() => []),
+        getWithRetry("/products", { params: { featured: true } }),
+        getWithRetry("/products", { params: { new_arrival: true } }),
+        getWithRetry("/categories"),
       ]);
-      setFeatured(f.slice(0, 6));
-      setNewArr(n.slice(0, 6));
-      setCategories(c);
+      setFeatured((f || []).slice(0, 6));
+      setNewArr((n || []).slice(0, 6));
+      setCategories(c || []);
     })();
   }, []);
 
