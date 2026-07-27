@@ -40,6 +40,16 @@ export default function ProductCard({ product, index = 0 }) {
           <div className="mt-1 text-[10px] uppercase tracking-widest text-[#A19D98]">
             {product.weight ? `${product.weight}` : product.purity || product.category}
           </div>
+          {product.description && (
+            <div className="mt-1 text-[11px] text-[#8A857F] leading-snug line-clamp-2">
+              {product.description}
+            </div>
+          )}
+          {product.making_charges && (
+            <div className="mt-1.5 text-[13px] text-[#D4AF37] font-medium">
+              Making: {product.making_charges}
+            </div>
+          )}
         </div>
       </Link>
       <button
