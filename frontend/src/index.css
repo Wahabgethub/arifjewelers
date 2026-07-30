@@ -176,10 +176,3 @@ input, textarea, select {
 }
 .dot-pulse { animation: gold-pulse 1.2s ease-in-out infinite; }
 
-@media (min-width: 768px) {
-    body { background: radial-gradient(circle at 15% 10%, rgba(212,175,55,0.10), transparent 40%), radial-gradient(circle at 85% 90%, rgba(212,175,55,0.07), transparent 45%), radial-gradient(ellipse at top, #171310 0%, #080706 65%); background-attachment: fixed; }
-    .app-frame { max-width: 640px; margin-top: 2.5rem; margin-bottom: 2.5rem; min-height: calc(100vh - 5rem); border-radius: 24px; border: 1px solid rgba(212,175,55,0.16); box-shadow: 0 50px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,175,55,0.08), 0 0 60px rgba(212,175,55,0.05); }
-}
-@media (min-width: 1280px) {
-    .app-frame { max-width: 960px; }
-}

@@ -111,7 +111,7 @@ export default function HomePage() {
           <h3 className="font-serif-lux text-xl text-[#FDFBF7]">{t.exploreCategories}</h3>
           <Link to="/collections" className="text-[10px] uppercase tracking-widest text-[#F3E5AB]">{t.viewAll}</Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {categories.slice(0, 6).map((cat, i) => (
             <Link
               key={cat.slug}
@@ -162,14 +162,14 @@ export default function HomePage() {
             <h3 className="font-serif-lux text-xl text-[#FDFBF7]">{t.featuredCollections}</h3>
             <Link to="/collections" className="text-[10px] uppercase tracking-widest text-[#F3E5AB]">{t.viewAll}</Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {featured.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
           </div>
         </section>
       )}
 
       {/* Reviews strip / Exchange / Inquiry teasers */}
-      <section className="mt-6 mx-4 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
+      <section className="mt-6 mx-4 grid grid-cols-2 gap-2">
         <Link to="/reviews" data-testid="teaser-reviews" className="surface p-4 btn-press">
           <div className="text-[10px] uppercase tracking-widest text-[#F3E5AB]">Real Customers</div>
           <div className="mt-1 font-serif-lux text-lg leading-tight">{t.reviews}</div>
