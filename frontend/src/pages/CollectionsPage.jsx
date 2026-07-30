@@ -47,7 +47,7 @@ export default function CollectionsPage() {
       {!slug && (
         <div className="mt-4 mx-4">
           <h2 className="font-serif-lux text-2xl mb-3 text-[#FDFBF7]">{t.exploreCategories}</h2>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
             {categories.map((cat, i) => (
               <motion.div
                 key={cat.slug}
@@ -87,7 +87,7 @@ export default function CollectionsPage() {
           </Link>
           <h2 className="font-serif-lux text-2xl mb-3 text-gold-gradient">{activeCat?.name_en || slug}</h2>
           {loadingProducts ? (
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
               {[0, 1, 2, 3].map((i) => (
                 <div key={i} className="surface rounded-xl overflow-hidden animate-pulse">
                   <div className="aspect-[4/5] bg-white/5" />
@@ -103,7 +103,7 @@ export default function CollectionsPage() {
               No items in this category yet. Please check back soon or ask on WhatsApp.
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">
               {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
             </div>
           )}
