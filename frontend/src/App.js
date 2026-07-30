@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { WishlistProvider } from "@/contexts/WishlistContext";
+import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 
 import CinematicSplash from "@/components/CinematicSplash";
@@ -17,6 +18,7 @@ import CollectionsPage from "@/pages/CollectionsPage";
 import ProductPage from "@/pages/ProductPage";
 import RatesPage from "@/pages/RatesPage";
 import WishlistPage from "@/pages/WishlistPage";
+import CartPage from "@/pages/CartPage";
 import ReviewsPage from "@/pages/ReviewsPage";
 import ExchangePage from "@/pages/ExchangePage";
 import InquiryPage from "@/pages/InquiryPage";
@@ -47,6 +49,7 @@ function AnimatedRoutes() {
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/rates" element={<RatesPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="/exchange" element={<ExchangePage />} />
             <Route path="/inquiry" element={<InquiryPage />} />
@@ -104,7 +107,9 @@ function App() {
     <LanguageProvider>
       <AuthProvider>
         <WishlistProvider>
+        <CartProvider>
           <AppShell />
+        </CartProvider>
         </WishlistProvider>
       </AuthProvider>
     </LanguageProvider>

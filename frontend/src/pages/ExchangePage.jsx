@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import AppHeader from "@/components/AppHeader";
 import { useLang } from "@/contexts/LanguageContext";
-import { whatsappLink } from "@/lib/whatsapp";
-import { MessageCircle, CheckCircle } from "lucide-react";
+import { whatsappLink, callLink } from "@/lib/whatsapp";
+import { MessageCircle, CheckCircle, Phone, TrendingUp } from "lucide-react";
 
 const STEPS_EN = [
   { title: "Bring your item", desc: "Any old gold or silver jewelry — chains, bangles, rings, biscuits — is welcome." },
@@ -14,6 +14,15 @@ const STEPS_EN = [
 
 export default function ExchangePage() {
   const { t } = useLang();
+  const [tradeType, setTradeType] = useState("sell");
+  const [approxQty, setApproxQty] = useState("");
+
+  const tradeMessage = () => {
+    const action = tradeType === "sell" ? "bechna" : "khareedna";
+    const qtyLine = approxQty ? ` Taqreeban ${approxQty} chahiye/hai.` : "";
+    return `Assalam-o-Alaikum, mujhe gold ${action} hai (aaj ke live rate par baat karni hai).${qtyLine} Kripya call ya WhatsApp par rate finalize kar dein.`;
+  };
+
   return (
     <div data-testid="exchange-page" className="pb-8">
       <AppHeader subtitle={t.exchange} />
@@ -55,6 +64,63 @@ export default function ExchangePage() {
         >
           <MessageCircle size={16} /> Ask on WhatsApp
         </a>
+
+        <div className="mt-8 surface p-4 border-gold-hair">
+          <div className="flex items-center gap-2 text-[#F3E5AB] text-[11px] uppercase tracking-widest">
+            <TrendingUp size={14} /> Buy / Sell Gold at Today's Rate
+          </div>
+          <p className="mt-2 text-[12px] text-[#A19D98] leading-relaxed">
+            Tell us roughly what you want, then call or WhatsApp us — the final rate is always agreed together, live, over the phone, based on the day's actual price.
+          </p>
+
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <button
+              onClick={() => setTradeType("sell")}
+              data-testid="trade-type-sell"
+              className={`btn-press h-10 rounded-full text-[13px] font-medium ${
+                tradeType === "sell" ? "btn-gold" : "surface border border-white/10 text-[#A19D98]"
+              }`}
+            >
+              I want to Sell
+            </button>
+            <button
+              onClick={() => setTradeType("buy")}
+              data-testid="trade-type-buy"
+              className={`btn-press h-10 rounded-full text-[13px] font-medium ${
+                tradeType === "buy" ? "btn-gold" : "surface border border-white/10 text-[#A19D98]"
+              }`}
+            >
+              I want to Buy
+            </button>
+          </div>
+
+          <input
+            value={approxQty}
+            onChange={(e) => setApproxQty(e.target.value)}
+            placeholder="Approx quantity (e.g. 2 tola, 10 grams)"
+            data-testid="trade-qty-input"
+            className="mt-2 w-full rounded-lg bg-[#080706] border border-white/10 px-3 py-2 text-[13px] text-[#FDFBF7] outline-none focus:border-[#D4AF37]/50"
+          />
+
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <a
+              href={callLink()}
+              data-testid="trade-call-btn"
+              className="btn-press surface h-11 rounded-full flex items-center justify-center gap-2 text-[13px] text-[#F3E5AB] border-gold-hair"
+            >
+              <Phone size={15} /> Call to Negotiate
+            </a>
+            <a
+              href={whatsappLink(tradeMessage())}
+              target="_blank"
+              rel="noreferrer"
+              data-testid="trade-whatsapp-btn"
+              className="btn-press btn-gold h-11 rounded-full flex items-center justify-center gap-2 text-[13px] font-medium"
+            >
+              <MessageCircle size={15} /> WhatsApp
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

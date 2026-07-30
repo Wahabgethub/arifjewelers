@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ChevronLeft, Heart, Phone, Share2, MessageCircle } from "lucide-react";
+import { ChevronLeft, Heart, Phone, Share2, MessageCircle, ShoppingBag, Check } from "lucide-react";
 import { api, fileUrl } from "@/lib/api";
 import { useLang } from "@/contexts/LanguageContext";
 import { useWishlist } from "@/contexts/WishlistContext";
+import { useCart } from "@/contexts/CartContext";
 import { whatsappLink, callLink, askPriceMessage } from "@/lib/whatsapp";
 import { toast } from "sonner";
 
@@ -11,6 +12,7 @@ export default function ProductPage() {
   const { id } = useParams();
   const { t, lang } = useLang();
   const { has, toggle } = useWishlist();
+  const cart = useCart();
   const [product, setProduct] = useState(null);
   const [imgIdx, setImgIdx] = useState(0);
 
@@ -164,6 +166,21 @@ export default function ProductPage() {
               <Share2 size={15} /> {t.share}
             </button>
           </div>
+          <button
+            onClick={() => cart.toggle(product)}
+            data-testid="product-add-to-cart"
+            className="btn-press surface h-11 rounded-full flex items-center justify-center gap-2 text-[13px] border-gold-hair"
+          >
+            {cart.has(product.id) ? (
+              <>
+                <Check size={15} className="text-[#D4AF37]" /> Added to Selection
+              </>
+            ) : (
+              <>
+                <ShoppingBag size={15} className="text-[#F3E5AB]" /> Add to Selection
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>
